@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waste Management Solutions</title>
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    /* Carousel styles */
+    .carousel {
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .carousel-item {
+      min-width: 100%;
+    }
+    .carousel-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    /* Navigation buttons */
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+    .carousel-nav button {
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: background 0.3s;
+    }
+    .carousel-nav button:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans tracking-normal leading-relaxed">
+
+  <!-- Header -->
+  <header class="bg-green-600 p-4 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-white text-3xl font-bold">Waste Management Solutions</h1>
+      <nav class="text-white">
+        <a href="/user_profile/" class="px-4 hover:text-gray-300">Profile</a>
+        <a href="/upload_waste/" class="px-4 hover:text-gray-300">Upload Waste</a>
+        <a href="#team" class="px-4 hover:text-gray-300">Our Team</a>
+        <a href="#reviews" class="px-4 hover:text-gray-300">Reviews</a>
+        <a href="#faq" class="px-4 hover:text-gray-300">FAQ</a>
+        <a href="/logout/" class="px-4 hover:text-gray-300">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Carousel -->
+  <section id="carousel" class="bg-white py-8">
+    <h2 class="text-center text-3xl font-semibold mb-4">Our Projects</h2>
+    <div class="carousel container mx-auto rounded-lg shadow-md relative overflow-hidden">
+      <div class="carousel-track">
+        <div class="carousel-item">
+          <img src="https://www.uffizio.com/wp-content/uploads/2024/01/ADAS-25-1-2.jpg" alt="Project 1">
+        </div>
+        <!-- <div class="carousel-item">
+          <img src="https://www.varmahomes.com/blog-manager/wp-content/uploads/2024/02/Easy-Waste-Management-Solutions-for-Apartments-in-Thrissur.jpg" alt="Project 2">
+        </div> -->
+        <div class="carousel-item">
+          <img src="https://www.gaptalent.com/wp-content/uploads/2023/10/waste-management-policy.jpg" alt="Project 3">
+        </div>
+        <!-- <div class="carousel-item">
+          <img src="{% static 'image/img1.jpg' %}" alt="Project 4">
+        </div> -->
+        <div class="carousel-item">
+          <img src="https://www.csrcares.in/wp-content/uploads/2024/08/WhatsApp-Image-2024-08-06-at-12.06.12-PM.jpeg" alt="Project 5">
+        </div>
+      </div>
+      <!-- Carousel Navigation -->
+      <div class="carousel-nav">
+        <button id="prevBtn" aria-label="Previous Slide">&#10094;</button>
+        <button id="nextBtn" aria-label="Next Slide">&#10095;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript for Carousel Functionality -->
+  <script>
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const nextButton = document.getElementById('nextBtn');
+    const prevButton = document.getElementById('prevBtn');
+    let currentIndex = 0;
+
+    function updateSlidePosition() {
+      track.style.transform = 'translateX(' + (-100 * currentIndex) + '%)';
+    }
+
+    function moveToNextSlide() {
+      if (currentIndex === slides.length - 1) {
+        currentIndex = 0;
+      } else {
+        currentIndex++;
+      }
+      updateSlidePosition();
+    }
+
+    function moveToPrevSlide() {
+      if (currentIndex === 0) {
+        currentIndex = slides.length - 1;
+      } else {
+        currentIndex--;
+      }
+      updateSlidePosition();
+    }
+
+    nextButton.addEventListener('click', moveToNextSlide);
+    prevButton.addEventListener('click', moveToPrevSlide);
+
+    // Auto-slide every 3 seconds
+    setInterval(moveToNextSlide, 3000);
+  </script>
+
+  <!-- About Section -->
+  <section id="about" class="bg-gray-200 py-12">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-4">About Us</h2>
+      <p class="text-gray-700 max-w-2xl mx-auto">
+        Our mission is to provide sustainable waste management solutions that benefit the environment, the economy, and society. From recycling to sustainable disposal, our services ensure responsible and effective waste management.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-12 bg-white">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-4">Our Services</h2>
+      <div class="flex flex-wrap justify-center gap-8">
+        <div class="w-full md:w-1/3 bg-green-100 shadow-lg rounded-lg p-6">
+          <i class="fas fa-recycle text-green-600 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Recycling Services</h3>
+          <p class="text-gray-600">We provide sustainable recycling solutions to divert waste from landfills.</p>
+        </div>
+        <div class="w-full md:w-1/3 bg-green-100 shadow-lg rounded-lg p-6">
+          <i class="fas fa-dumpster text-green-600 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Waste Disposal</h3>
+          <p class="text-gray-600">Our responsible waste disposal solutions prioritize eco-friendliness and efficiency.</p>
+        </div>
+        <div class="w-full md:w-1/3 bg-green-100 shadow-lg rounded-lg p-6">
+          <i class="fas fa-leaf text-green-600 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Sustainable Solutions</h3>
+          <p class="text-gray-600">We offer eco-friendly solutions to reduce waste and promote a greener environment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="bg-gray-200 py-12">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-4">Meet Our Team</h2>
+      <div class="flex flex-wrap justify-center gap-8">
+        <div class="w-full md:w-1/4 bg-white shadow-lg rounded-lg p-6">
+          <img class="rounded-full mx-auto mb-4" src="https://i.pravatar.cc/150?img=1" alt="Team Member 1">
+          <h3 class="text-xl font-semibold">John Doe</h3>
+          <p class="text-gray-600">CEO & Founder</p>
+        </div>
+        <div class="w-full md:w-1/4 bg-white shadow-lg rounded-lg p-6">
+          <img class="rounded-full mx-auto mb-4" src="https://i.pravatar.cc/150?img=2" alt="Team Member 2">
+          <h3 class="text-xl font-semibold">Jane Smith</h3>
+          <p class="text-gray-600">Operations Manager</p>
+        </div>
+        <div class="w-full md:w-1/4 bg-white shadow-lg rounded-lg p-6">
+          <img class="rounded-full mx-auto mb-4" src="https://i.pravatar.cc/150?img=3" alt="Team Member 3">
+          <h3 class="text-xl font-semibold">Michael Brown</h3>
+          <p class="text-gray-600">Sustainability Lead</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section id="reviews" class="py-12 bg-white">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-4">Customer Reviews</h2>
+      <p class="text-gray-700 max-w-2xl mx-auto">Our clients appreciate the reliable and eco-friendly solutions we provide for waste management.</p>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="bg-gray-200 py-12">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-4">Frequently Asked Questions</h2>
+      <p class="text-gray-700 max-w-2xl mx-auto">Got questions? We've got answers to help you understand our waste management processes.</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-12 bg-white">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-4">Contact Us</h2>
+      <p class="text-gray-700 max-w-2xl mx-auto">Reach out to us for any inquiries or support.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-green-600 text-white py-4">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2024 Waste Management Solutions. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

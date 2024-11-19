@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile | Waste Management System</title>
+  <!-- Tailwind CSS (for styling) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Font Awesome (for waste bin icon) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f9fafb; /* Light background for a cleaner look */
+      font-family: 'Arial', sans-serif;
+    }
+
+    .profile-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #ffffff; /* White background for form */
+      border-radius: 12px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      margin-top: 3rem;
+    }
+
+    .profile-container:hover {
+      transform: translateY(-10px); /* Hover effect for modern feel */
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #38a169; /* Green color */
+      font-weight: bold;
+    }
+
+    .profile-header h1 {
+      font-size: 2.25rem;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .form-btn {
+      background-color: #38a169;
+      color: white;
+      padding: 1rem;
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-btn:hover {
+      background-color: #2f855a;
+    }
+
+    label {
+      font-size: 1.1rem;
+      color: #2d3748;
+    }
+
+    .profile-container .form-error {
+      margin-top: -1rem;
+    }
+
+    /* Profile Image Styling */
+    .profile-image {
+      display: block;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 4px solid #38a169; /* Border color for the profile image */
+    }
+
+    .profile-details {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .profile-details p {
+      font-size: 1.1rem;
+      color: #2d3748;
+    }
+
+    .profile-details span {
+      color: #38a169;
+      font-weight: bold;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+
+    .button-container a {
+      width: 48%;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 10px;
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+    .back-btn {
+      background-color: #38a169;
+    }
+
+    .back-btn:hover {
+      background-color: #2f855a;
+    }
+
+    .update-btn {
+      background-color: #f59e0b;
+    }
+
+    .update-btn:hover {
+      background-color: #d97706;
+    }
+
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <div class="profile-container shadow-lg mt-10">
+    <!-- Waste Bin Icon -->
+    <div class="wastebin-header">
+      <a href="{% url 'delete_ac' %}">
+        <i class="fas fa-trash-alt wastebin-icon"></i>
+      </a>
+    </div>
+    
+
+    <div class="profile-header">
+      <h1>Profile</h1>
+    </div>
+
+    <!-- Profile Image Section -->
+     {% if profile_picture %}
+    <div class="text-center mb-6">
+      <img src="{{profile_picture.url}}" class="profile-image" width="150" height="150" alt="Profile Picture">
+    </div>
+    {% else %}
+    <div class="text-center mb-6">
+      <img src="{% static '/image/ppic.jpg' %}" class="profile-image" width="150" height="150" alt="Profile Picture">
+    </div>
+    {% endif %}
+      
+
+    <div class="profile-details">
+      <!-- Username -->
+      <p><strong>Username:</strong> <span>{{username}}</span></p>
+
+      <!-- Email -->
+      <p><strong>Email:</strong> <span>{{email}}</span></p>
+
+      <!-- Phone Number -->
+      <p><strong>Phone Number:</strong> <span>{{phonenumber}}</span></p>
+
+      <!-- Place -->
+      <p><strong>Place:</strong> <span>{{place}}</span></p>
+
+      <!-- Password (you may choose to leave this hidden for security) -->
+      <p><strong>Password:</strong> <span>{{password}}</span></p>
+    </div>
+
+    <!-- Button Container -->
+    <div class="button-container">
+      <!-- Back Button (navigate to user home) -->
+      <a href="{% url 'user_home' %}" class="back-btn">Back</a>
+      
+      <!-- Update Button (navigate to user update page) -->
+      <a href="/user_update/" class="update-btn">Update</a>
+    </div>
+  </div>
+
+</body>
+</html>

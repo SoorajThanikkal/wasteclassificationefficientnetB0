@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile | Waste Management System</title>
+  <!-- Tailwind CSS (for styling) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Font Awesome (for waste bin icon) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    .profile-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #f9fafb; /* Light background for a cleaner look */
+      border-radius: 12px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .profile-container:hover {
+      transform: translateY(-10px); /* Hover effect for modern feel */
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #38a169; /* Green color */
+      font-weight: bold;
+    }
+
+    .profile-header h1 {
+      font-size: 2.25rem;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .profile-form input, .profile-form select {
+      width: 100%;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .profile-form input:focus, .profile-form select:focus {
+      border-color: #38a169;
+      outline: none;
+    }
+
+    .form-btn {
+      background-color: #38a169;
+      color: white;
+      padding: 1rem;
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-btn:hover {
+      background-color: #2f855a;
+    }
+
+    .form-error {
+      color: red;
+      font-size: 0.875rem;
+    }
+
+    label {
+      font-size: 1.1rem;
+      color: #2d3748;
+    }
+
+    .profile-container .form-error {
+      margin-top: -1rem;
+    }
+
+    .login-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: #38a169;
+    }
+
+    .login-link:hover {
+      text-decoration: underline;
+    }
+
+    .wastebin-icon {
+      font-size: 3rem;
+      color: #38a169;
+      margin-bottom: 1rem;
+    }
+
+    .wastebin-header {
+      text-align: center;
+      color: #38a169;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <div class="profile-container shadow-lg mt-10">
+    
+
+    <div class="profile-header">
+      <h1>Update Profile</h1>
+    </div>
+
+    <form class="profile-form" id="profileForm" action="/proupdate/" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      <!-- Profile Picture -->
+      <div class="mb-4">
+        {% if profile_picture %}
+          <img src="{{ profile_picture.url }}" width="100" height="100" alt="Profile Picture">
+        {% else %}
+          <p>No profile photo attached</p>
+        {% endif %}
+        <label for="profile_picture" class="block text-lg font-semibold">Profile Picture</label>
+        <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
+      </div>
+
+      <!-- Username -->
+      <div class="mb-4">
+        <label for="username" class="block text-lg font-semibold">Username</label>
+        <input type="text" id="username" name="username" value="{{ username }}" maxlength="20" class="input-field" pattern="[a-zA-Z ]+$" title="Username must contain only letters">
+        <div id="usernameError" class="form-error"></div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-4">
+        <label for="email" class="block text-lg font-semibold">Email</label>
+        <input type="email" id="email" name="email" value="{{ email }}" maxlength="50" class="input-field" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address">
+        <div id="emailError" class="form-error"></div>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="mb-4">
+        <label for="phonenumber" class="block text-lg font-semibold">Phone Number</label>
+        <input type="tel" id="phonenumber" name="phonenumber" value="{{ phonenumber }}" pattern="^\d{10}$" maxlength="10" class="input-field" title="Phone number must be exactly 10 digits">
+        <div id="phoneError" class="form-error"></div>
+      </div>
+
+      <!-- Place (Dropdown with Kerala Districts) -->
+      <div class="mb-4">
+        <label for="place" class="block text-lg font-semibold">Place</label>
+        <select id="place" name="place" class="input-field">
+          <option value="" disabled>Select Place</option>
+          <option value="Alappuzha" {% if place == 'Alappuzha' %}selected{% endif %}>Alappuzha</option>
+          <option value="Idukki" {% if place == 'Idukki' %}selected{% endif %}>Idukki</option>
+          <option value="Ernakulam" {% if place == 'Ernakulam' %}selected{% endif %}>Ernakulam</option>
+          <option value="Kollam" {% if place == 'Kollam' %}selected{% endif %}>Kollam</option>
+          <option value="Kottayam" {% if place == 'Kottayam' %}selected{% endif %}>Kottayam</option>
+          <option value="Kannur" {% if place == 'Kannur' %}selected{% endif %}>Kannur</option>
+          <option value="Kasaragod" {% if place == 'Kasaragod' %}selected{% endif %}>Kasaragod</option>
+          <option value="Pathanamthitta" {% if place == 'Pathanamthitta' %}selected{% endif %}>Pathanamthitta</option>
+          <option value="Malappuram" {% if place == 'Malappuram' %}selected{% endif %}>Malappuram</option>
+          <option value="Palakkad" {% if place == 'Palakkad' %}selected{% endif %}>Palakkad</option>
+          <option value="Thrissur" {% if place == 'Thrissur' %}selected{% endif %}>Thrissur</option>
+          <option value="Wayanad" {% if place == 'Wayanad' %}selected{% endif %}>Wayanad</option>
+          <option value="Kozhikode" {% if place == 'Kozhikode' %}selected{% endif %}>Kozhikode</option>
+          <option value="Thiruvananthapuram" {% if place == 'Thiruvananthapuram' %}selected{% endif %}>Thiruvananthapuram</option>
+        </select>
+        <div id="placeError" class="form-error"></div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label for="password" class="block text-lg font-semibold">Password</label>
+        <input type="password" id="password" name="password" value="{{ password }}" maxlength="20" class="input-field" pattern=".{6,}" title="Password must be at least 6 characters long">
+        <div id="passwordError" class="form-error"></div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="form-btn">Update Profile</button>
+    </form>
+
+    <!-- Link to Profile Page -->
+    <div class="text-center mt-4">
+      <a href="/user_profile/" class="login-link">Back to Profile</a>
+    </div>
+  </div>
+
+</body>
+</html>

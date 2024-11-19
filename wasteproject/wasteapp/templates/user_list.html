@@ -1,0 +1,67 @@
+{% extends "admin_home.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl font-semibold mb-6">User List</h1>
+
+        <!-- Table for displaying user data -->
+        <table class="min-w-full table-auto bg-white shadow-md rounded-lg">
+            <thead>
+                <tr class="bg-green-600 text-white">
+                    <th class="py-3 px-6 text-left">Username</th>
+                    <th class="py-3 px-6 text-left">Email</th>
+                    <th class="py-3 px-6 text-left">Place</th>
+                    <th class="py-3 px-6 text-left">Profile Picture</th>
+                    <th class="py-3 px-6 text-left">Phone Number</th>
+                    <th class="py-3 px-6 text-left">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in users %}
+                <tr class="border-t">
+                    <td class="py-3 px-6">{{ i.username }}</td>
+                    <td class="py-3 px-6">{{ i.email }}</td>
+                    <td class="py-3 px-6">{{ i.place }}</td>
+                    {% if i.image %}
+                    <td class="py-3 px-6">
+                        <img src="{{ i.profile_picture.url }}" alt="Profile Picture" class="w-12 h-12 rounded-full">
+                    </td>
+                    {% else %}
+                    <td class="py-3 px-6">no image</td>
+                    {% endif %}
+                    <td class="py-3 px-6">{{ i.phonenumber }}</td>
+                    <td class="py-3 px-6">
+                        <button
+                            class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
+                            onclick="confirmDelete('{{ i.id }}')">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function confirmDelete(userId) {
+            if (confirm("Are you sure you want to delete this user?")) {
+                window.location.href = `/delete_user/${userId}`;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
+{% endblock %}
